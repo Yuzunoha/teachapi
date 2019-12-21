@@ -8,15 +8,6 @@ const port = process.env.PORT || 3000; // port番号を指定
 const urlPosts = 'https://teachapi.herokuapp.com/posts';
 const urlSignUp = 'https://teachapi.herokuapp.com/sign_up';
 
-// ヘッダーオブジェクトを作成する
-const getHeaderObj = req => {
-  const authorization = req.header('Authorization');
-  return {
-    'Content-Type': 'application/json',
-    Authorization: authorization
-  };
-};
-
 // CORSを許可する
 app.use(function(req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
@@ -26,6 +17,15 @@ app.use(function(req, res, next) {
 
 // POSTを処理できるようにする
 app.use(bodyParser());
+
+// ヘッダーオブジェクトを作成する
+const getHeaderObj = req => {
+  const authorization = req.header('Authorization');
+  return {
+    'Content-Type': 'application/json',
+    Authorization: authorization
+  };
+};
 
 // コメント全取得
 app.get('/api/v1/get', (req, res) => {
