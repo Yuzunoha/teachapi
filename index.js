@@ -1,24 +1,32 @@
-const http = require('http');
-const fetch = require('node-fetch');
+const http = require("http");
+const fetch = require("node-fetch");
+const express = require("express");
+const app = express();
+const port = process.env.PORT || 3000; // port番号を指定
 
-const url = 'https://teachapi.herokuapp.com/posts';
-const token = 'l4hKn0Wcp5sNBgQc9MZL7Qtt';
+const url = "https://teachapi.herokuapp.com/posts";
+const token = "l4hKn0Wcp5sNBgQc9MZL7Qtt";
 
-http.createServer((request, response) => {
+// GET http://localhost:3000/api/v1/
+app.get("/api/v1/get/", function(req, res) {
   fetch(url, {
-    method: 'GET',
+    method: "GET",
     headers: {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + token
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token
     }
-  }).then(res => {
-    return res.json();
-  }).then(json => {
-    response.writeHead(200, { 'Content-Type': 'text/plain' });
-    const jsonStr = JSON.stringify(json);
-    response.end(jsonStr);
-    console.log('Success:', jsonStr)
-  });
-}).listen(3000);
+  })
+    .then(res => {
+      return res.json();
+    })
+    .then(json => {
+      // 返却する
+      res.json({
+        json: json
+      });
+    });
+});
 
-console.log('Server running at http://127.0.0.1:3000');
+//サーバ起動
+app.listen(port);
+console.log("listen on port " + port);
