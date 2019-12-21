@@ -1,4 +1,3 @@
-const http = require("http");
 const fetch = require("node-fetch");
 const express = require("express");
 const app = express();
@@ -7,8 +6,13 @@ const port = process.env.PORT || 3000; // port番号を指定
 const url = "https://teachapi.herokuapp.com/posts";
 const token = "l4hKn0Wcp5sNBgQc9MZL7Qtt";
 
-// GET http://localhost:3000/api/v1/
 app.get("/api/v1/get/", function(req, res) {
+  // { host: 'localhost:3000',
+  // 'user-agent': 'curl/7.58.0',
+  // accept: '*/*',
+  // 'content-type': 'application/json',
+  // authorization: 'Bearer l4hKn0Wcp5sNBgQc9MZL7Qtt' }
+  console.log(req.headers);
   fetch(url, {
     method: "GET",
     headers: {
