@@ -4,23 +4,20 @@ const fetch = require('node-fetch');
 const url = 'https://teachapi.herokuapp.com/posts';
 const token = 'l4hKn0Wcp5sNBgQc9MZL7Qtt';
 
-
 http.createServer((request, response) => {
   fetch(url, {
     method: 'GET',
-    // body: JSON.stringify(data), // data can be `string` or {object}!
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer l4hKn0Wcp5sNBgQc9MZL7Qtt'
+      'Authorization': 'Bearer ' + token
     }
   }).then(res => {
     return res.json();
-  }).then(result => {
+  }).then(json => {
     response.writeHead(200, { 'Content-Type': 'text/plain' });
-    response.end(JSON.stringify(result));
-    console.log('Success:', JSON.stringify(result))
-  }).catch(error => {
-    console.error('Error:', error)
+    const jsonStr = JSON.stringify(json);
+    response.end(jsonStr);
+    console.log('Success:', jsonStr)
   });
 }).listen(3000);
 
