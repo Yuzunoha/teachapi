@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/Yuzunoha/teachapi/issues"
   },
-  "homepage": "https://github.com/Yuzunoha/teachapi#readme"
+  "homepage": "https://github.com/Yuzunoha/teachapi#readme",
+  "dependencies": {
+    "node-fetch": "^2.6.0"
+  }
 }
