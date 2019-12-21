@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const app = express();
 const port = process.env.PORT || 3000; // port番号を指定
 
-const url = 'https://teachapi.herokuapp.com/posts';
+const urlPosts = 'https://teachapi.herokuapp.com/posts';
 const token = 'l4hKn0Wcp5sNBgQc9MZL7Qtt';
 
 const getHeaderObj = req => {
@@ -28,7 +28,7 @@ app.use(bodyParser());
 
 app.get('/api/v1/get', (req, res) => {
   const headerObj = getHeaderObj(req);
-  fetch(url, {
+  fetch(urlPosts, {
     method: 'GET',
     headers: headerObj
   })
@@ -41,7 +41,19 @@ app.get('/api/v1/get', (req, res) => {
 });
 
 app.post('/api/v1/post', (req, res) => {
-  console.log(req.body);
+  const headerObj = getHeaderObj(req);
+  const bodyJson = '{"post_params": {"text": "55555555555"}}';
+  return fetch(urlPosts, {
+    method: 'POST',
+    headers: headerObj,
+    body: bodyJson
+  })
+    .then(response => {
+      return response.json();
+    })
+    .then(responseJson => {
+      res.json(JSON.stringify(responseJson));
+    });
 });
 
 //サーバ起動
