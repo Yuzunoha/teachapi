@@ -8,8 +8,7 @@ const port = process.env.PORT || 3000; // port番号を指定
 const urlPosts = 'https://teachapi.herokuapp.com/posts';
 const urlSignUp = 'https://teachapi.herokuapp.com/sign_up';
 
-const token = 'l4hKn0Wcp5sNBgQc9MZL7Qtt';
-
+// ヘッダーオブジェクトを作成する
 const getHeaderObj = req => {
   const authorization = req.header('Authorization');
   return {
@@ -25,9 +24,10 @@ app.use(function(req, res, next) {
   next();
 });
 
-// POSTを処理する
+// POSTを処理できるようにする
 app.use(bodyParser());
 
+// コメント全取得
 app.get('/api/v1/get', (req, res) => {
   const headerObj = getHeaderObj(req);
   fetch(urlPosts, {
@@ -42,6 +42,7 @@ app.get('/api/v1/get', (req, res) => {
     });
 });
 
+// コメント送信
 app.post('/api/v1/post', (req, res) => {
   const headerObj = getHeaderObj(req);
   const bodyJson = JSON.stringify(req.body);
@@ -58,6 +59,7 @@ app.post('/api/v1/post', (req, res) => {
     });
 });
 
+// ユーザ登録
 app.post('/api/v1/sign_up', (req, res) => {
   const headerObj = getHeaderObj(req);
   const bodyJson = JSON.stringify(req.body);
