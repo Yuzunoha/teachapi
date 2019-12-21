@@ -1,26 +1,26 @@
-var http = require('http');
-var webclient = require("request");
+const http = require('http');
+const fetch = require('node-fetch');
+
+const url = 'https://teachapi.herokuapp.com/posts';
 const token = 'l4hKn0Wcp5sNBgQc9MZL7Qtt';
 
-const promiseApiGet = () => {
-  return new Promise(resolve => {
-    webclient.get({
-      url: "https://teachapi.herokuapp.com/posts",
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer: ' + token
-      }
-    }, (error, response, body) => {
-      const json = response.json;
-      resolve(json);
-    });
-  });
-};
 
-http.createServer(function (request, response) {
-  promiseApiGet().then(result => {
+http.createServer((request, response) => {
+  fetch(url, {
+    method: 'GET',
+    // body: JSON.stringify(data), // data can be `string` or {object}!
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer l4hKn0Wcp5sNBgQc9MZL7Qtt'
+    }
+  }).then(res => {
+    return res.json();
+  }).then(result => {
     response.writeHead(200, { 'Content-Type': 'text/plain' });
-    response.end(result);
+    response.end(JSON.stringify(result));
+    console.log('Success:', JSON.stringify(result))
+  }).catch(error => {
+    console.error('Error:', error)
   });
 }).listen(3000);
 
