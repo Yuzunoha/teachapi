@@ -15,26 +15,16 @@ const getHeaderObj = req => {
 };
 
 app.get("/api/v1/get/", function(req, res) {
-  // { host: 'localhost:3000',
-  // 'user-agent': 'curl/7.58.0',
-  // accept: '*/*',
-  // 'content-type': 'application/json',
-  // authorization: 'Bearer l4hKn0Wcp5sNBgQc9MZL7Qtt' }
   headerObj = getHeaderObj(req);
-  console.log(headerObj);
-
   fetch(url, {
     method: "GET",
     headers: headerObj
   })
-    .then(res => {
-      return res.json();
+    .then(response => {
+      return response.json();
     })
-    .then(json => {
-      // 返却する
-      res.json({
-        json: json
-      });
+    .then(responseJson => {
+      res.json(responseJson);
     });
 });
 
