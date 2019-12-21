@@ -17,10 +17,7 @@ const getHeaderObj = req => {
 // CORSを許可する
 app.use(function(req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
-  res.header(
-    'Access-Control-Allow-Headers',
-    'Origin, X-Requested-With, Content-Type, Accept'
-  );
+  res.header('Access-Control-Allow-Headers', '*');
   next();
 });
 
@@ -34,7 +31,7 @@ app.get('/api/v1/get/', function(req, res) {
       return response.json();
     })
     .then(responseJson => {
-      res.json(responseJson);
+      res.json(JSON.stringify(responseJson));
     });
 });
 
