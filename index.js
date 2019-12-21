@@ -27,8 +27,8 @@ const getHeaderObj = req => {
   };
 };
 
-// コメント全取得
-app.get('/api/v1/get', (req, res) => {
+// GET処理
+const callbackGet = (req, res) => {
   const headerObj = getHeaderObj(req);
   fetch(urlPosts, {
     method: 'GET',
@@ -40,13 +40,14 @@ app.get('/api/v1/get', (req, res) => {
     .then(responseJson => {
       res.json(JSON.stringify(responseJson));
     });
-});
+};
 
-// コメント送信
-app.post('/api/v1/post', (req, res) => {
+// POST処理
+const callbackPost = (req, res) => {
   const headerObj = getHeaderObj(req);
   const bodyJson = JSON.stringify(req.body);
-  fetch(urlPosts, {
+  const url = headerObj.Authorization ? urlPosts : urlSignUp;
+  fetch(url, {
     method: 'POST',
     headers: headerObj,
     body: bodyJson
@@ -57,24 +58,16 @@ app.post('/api/v1/post', (req, res) => {
     .then(responseJson => {
       res.json(JSON.stringify(responseJson));
     });
-});
+};
 
 // ユーザ登録
-app.post('/api/v1/sign_up', (req, res) => {
-  const headerObj = getHeaderObj(req);
-  const bodyJson = JSON.stringify(req.body);
-  fetch(urlSignUp, {
-    method: 'POST',
-    headers: headerObj,
-    body: bodyJson
-  })
-    .then(response => {
-      return response.json();
-    })
-    .then(responseJson => {
-      res.json(JSON.stringify(responseJson));
-    });
-});
+app.post('/api/v1/sign_up', callbackPost);
+
+// コメント全取得
+app.get('/api/v1/get', callbackGet);
+
+// コメント送信
+app.post('/api/v1/post', callbackPost);
 
 //サーバ起動
 app.listen(port);
