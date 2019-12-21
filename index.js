@@ -7,7 +7,7 @@ const url = 'https://teachapi.herokuapp.com/posts';
 const token = 'l4hKn0Wcp5sNBgQc9MZL7Qtt';
 
 const getHeaderObj = req => {
-  const authorization = req.header('authorization');
+  const authorization = req.header('Authorization');
   return {
     'Content-Type': 'application/json',
     Authorization: authorization
@@ -25,7 +25,7 @@ app.use(function(req, res, next) {
 });
 
 app.get('/api/v1/get/', function(req, res) {
-  headerObj = getHeaderObj(req);
+  const headerObj = getHeaderObj(req);
   fetch(url, {
     method: 'GET',
     headers: headerObj
