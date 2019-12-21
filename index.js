@@ -42,7 +42,7 @@ app.get('/api/v1/get', (req, res) => {
 
 app.post('/api/v1/post', (req, res) => {
   const headerObj = getHeaderObj(req);
-  const bodyJson = '{"post_params": {"text": "55555555555"}}';
+  const bodyJson = JSON.stringify(req.body);
   return fetch(urlPosts, {
     method: 'POST',
     headers: headerObj,
