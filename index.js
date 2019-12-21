@@ -1,5 +1,7 @@
 const fetch = require('node-fetch');
 const express = require('express');
+const bodyParser = require('body-parser');
+
 const app = express();
 const port = process.env.PORT || 3000; // port番号を指定
 
@@ -21,7 +23,10 @@ app.use(function(req, res, next) {
   next();
 });
 
-app.get('/api/v1/get/', function(req, res) {
+// POSTを処理する
+app.use(bodyParser());
+
+app.get('/api/v1/get', (req, res) => {
   const headerObj = getHeaderObj(req);
   fetch(url, {
     method: 'GET',
@@ -33,6 +38,10 @@ app.get('/api/v1/get/', function(req, res) {
     .then(responseJson => {
       res.json(JSON.stringify(responseJson));
     });
+});
+
+app.post('/api/v1/post', (req, res) => {
+  console.log(req.body);
 });
 
 //サーバ起動
